@@ -1,7 +1,18 @@
 <script setup>
+import {ref} from "vue";
+
 defineProps({
-    data: Array
+    data: Array,
+    showModal: Boolean,
 });
+
+function openModal(id){
+    const data = ref();
+     axios.get('/api/users/'+ id).then(function (response) {
+       data.value = response.data;
+    });
+}
+
 </script>
 
 <template>
@@ -13,7 +24,7 @@ defineProps({
     </tr>
     <tr v-for="user in data">
       <td>
-        <a>
+        <a @click="openModal(user.id)">
           {{ user.name }}
         </a>
       </td>
