@@ -15,6 +15,13 @@ axios.get('/api/users').then(function (response) {
 axios.get('/api/users').then(function (response) {
     dataLinks.value = response.data.links;
 });
+function getPages(label){
+    axios.get('/api/users/?page=' + label)
+        .then(function (response) {
+            dataLinks.value = response.data.links;
+            console.log(dataLinks.value[label]);
+        });
+}
 
 function openModal(id) {
     showModal.value = true;
@@ -55,7 +62,7 @@ function openModal(id) {
 
 
     <div class="pagination">
-        <a v-for="link in dataLinks" @click="link.url"><p class="pagination__text">{{ link.label }}</p></a>
+        <a v-for="link in dataLinks" @click="getPages(link.label)"><p class="pagination__text">{{ link.label }}</p></a>
     </div>
 </template>
 
